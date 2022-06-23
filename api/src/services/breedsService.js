@@ -32,15 +32,27 @@ const getInfoFromApi = async (req, res, next) => {
 };
 
 const getInfoFromDb = async(req, res, next) => {
-    return await Breed.findAll({
+    const aaa = await Breed.findAll({
         include: {
             model: Temperament,
             attributes: ['name'],
-            throgh: {
+            through: {
                 attributes: [],
             }
         }
-    });
+    })
+    // console.log(aaa)
+    return aaa.map(e => {
+        return {
+            id: e.ID,
+            name: e.name,
+            heigh: e.height,
+            weight: e.weight,
+            temperament: e.temperaments.map(e => e.name),
+            life_span: e.life_span,
+            image: e.image
+        }
+    })
 };
 
 const getAllInfo = async(req, res, next) => {
