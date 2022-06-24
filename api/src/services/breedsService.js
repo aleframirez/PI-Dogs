@@ -8,6 +8,7 @@ const prueba = (req, res) => {
     return res.send('Hola');
 };
 
+// Lamado a la API
 const getInfoFromApi = async (req, res, next) => {
         const dataFromApi = await axios.get(API_URL);
         const infoFromApi = await dataFromApi.data.map(e => {
@@ -27,12 +28,12 @@ const getInfoFromApi = async (req, res, next) => {
                 image: e.image.url
             }
         })
-        // console.log('Listoooooooo!!')
         return infoFromApi
 };
 
+// Obtencion de Info a la Base de Datos
 const getInfoFromDb = async(req, res, next) => {
-    const aaa = await Breed.findAll({
+    const theInfoFromDb = await Breed.findAll({
         include: {
             model: Temperament,
             attributes: ['name'],
@@ -41,8 +42,7 @@ const getInfoFromDb = async(req, res, next) => {
             }
         }
     })
-    // console.log(aaa)
-    return aaa.map(e => {
+    return theInfoFromDb.map(e => {
         return {
             id: e.ID,
             name: e.name,
@@ -55,6 +55,7 @@ const getInfoFromDb = async(req, res, next) => {
     })
 };
 
+// Union de la Base de Datos con la informacion de la API
 const getAllInfo = async(req, res, next) => {
     const dataFromApi = await getInfoFromApi();
     const dataFromDb = await getInfoFromDb();
@@ -62,6 +63,7 @@ const getAllInfo = async(req, res, next) => {
     return allTheData;
 };
 
+// Llamado final para obtener toda la info y mandarla
 const allInfo = async(req, res, next) => {
     const { name } = req.query;
     const allDogs = await getAllInfo();
@@ -73,16 +75,17 @@ const allInfo = async(req, res, next) => {
     }
 }
 
+// Obtencion de los datos por ID
 const getFromId = async(req, res, next) => {
     const { id } = req.params;
     const allDogs = await getAllInfo();
-    // console.log(allDogs);
     if(id){
         const dog = allDogs.filter(e => e.id == id);
         dog.length ? res.status(200).json(dog) : res.status(404).send('No hay nada');
     }
 };
 
+// Posteo de un nuevo perro
 const postNewDog = async(req, res, next) => {
     let { name, min_height, max_height, min_weight, max_weight, life_span, temperaments, image } = req.body;
 
@@ -101,7 +104,7 @@ const postNewDog = async(req, res, next) => {
         height: orderedHeight,
         weight: orderedWeight,
         life_span,
-        image
+        image: image ? image : "https://www.liveabout.com/thmb/qw3Q_JaguUrrF0r3ojuDdbDuN1U=/735x1200/filters:fill(auto,1)/lost-dog-58b8c9475f9b58af5c8c7aec.jpg"
     });
 
     let tempForDog = await Temperament.findAll({
@@ -113,10 +116,12 @@ const postNewDog = async(req, res, next) => {
     res.status(200).send('Your dog has been created!')
 };
 
+// Obtencion de todos los temperamentos
 const getAllTemperaments = async(req, res, next) => {
     const temperamentsFromApi = await axios.get(API_URL);
     const allTemperaments = temperamentsFromApi.data.map(t => t.temperament);
     const temperaments = allTemperaments.toString().split(',');
+    
     temperaments.forEach(e => {
         let i = e.trim()
         Temperament.findOrCreate({
