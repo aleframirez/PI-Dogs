@@ -1,5 +1,5 @@
 import React from "react";
-import SingleDog from "../singleDog/SingleDog"
+import SingleDog from "./SingleDog"
 
 export default function PackOfDogs({dogs}){
     return(
