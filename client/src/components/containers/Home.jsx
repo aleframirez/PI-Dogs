@@ -1,8 +1,8 @@
 import React, {useEffect} from "react";
 import PackOfDogs from "../dumbs/PackOfDogs";
 import { connect } from "react-redux";
-import { getDogs, filterByTemperament } from "../../redux/actions";
-import SearchBar from "./SearchBar";
+import { getDogs } from "../../redux/actions";
+import NavBar from "./NavBar";
 
 function mapStateToProps(state){
     return{
@@ -10,27 +10,23 @@ function mapStateToProps(state){
     }
 }
 
-function handleFilterByTemperament(e){
-    dispatch(filterByTemperament(e.target.value))
-}
-
 function Home(props){
     // console.log(props)
     useEffect(() => {
         props.getDogs();
-    },[props])
+    },[])
     
     return(
         <div className="container">
+            <NavBar />
             <div>
                 <select>
                     <option value = "temperaments">Temperaments</option>
                     <option value = "breeds">Breed</option>
                 </select>
-                <SearchBar />
             </div>
             <div>
-                <select onChange={e => handleFilterByTemperament(e)}>
+                <select>
                     <option value = "All">All</option>
                     <option value = "Created">Createds</option>
                     <option value = "Api">Existents</option>

@@ -1,9 +1,11 @@
 import React from "react";
 import SingleDog from "./SingleDog"
+import styles from "./modules/PackOfDogs.module.css"
 
 export default function PackOfDogs({dogs}){
+    console.log('Que lo que ta pasando aqui Pablo Lorenzo?', dogs)
     return(
-        <div className="packOfDog">
+        <div className={styles.packOfDog}>
             {dogs.length > 0 ? (
                 dogs.map((e) => (
                     <div key={e.id} className="dogInPack">

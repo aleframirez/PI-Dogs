@@ -1,13 +1,13 @@
 import { 
-    GET_DOGS, 
     GET_TEMPERAMENTS,
-    FILTER_BY_TEMPERAMENT,
-    GET_NAME_DOGS,
-    ORDER_BY_NAME,
-    ORDER_BY_WEIGHT,
-    GET_DETAILS,
-    ADD_FAVORITE,
     REMOVE_FAVORITE,
+    ORDER_BY_WEIGHT,
+    GET_DOGS, 
+    GET_NAME_DOGS,
+    ADD_FAVORITE,
+    ORDER_BY_NAME,
+    FILTER_BY_TEMPERAMENT,
+    GET_DETAILS,
 } from "./actions"
 
 let initialState = {
@@ -23,7 +23,7 @@ export default function rootReducer(state = initialState, action){
         case GET_DOGS:
             return{
                 ...state,
-                allDogs: action.payload
+                dogs: action.payload
             };
         case GET_NAME_DOGS:
             return{
@@ -44,39 +44,39 @@ export default function rootReducer(state = initialState, action){
                 details: moreDetails
             };
         case ORDER_BY_WEIGHT:
-            const orderWeight = action.payload === "min_weight" ? state.allDogs.sort((a, b) => {
+            const orderWeight = action.payload === "min_weight" ? state.dogs.sort((a, b) => {
                 if(parseInt(a.weight[1]) > parseInt(b.weight[1])) return 1;
                 if(parseInt(b.weight[1]) > parseInt(a.weight[1])) return -1;
                 return 0;
-            }) : state.allDogs.sort((a, b) => {
+            }) : state.dogs.sort((a, b) => {
                 if(parseInt(a.weight[1]) > parseInt(b.weight[1])) return -1;
                 if(parseInt(b.weight[1]) > parseInt(a.weight[1])) return 1;
                 return 0;
             });
             return{
                 ...state,
-                dogs: orderWeight
+                allDogs: orderWeight
             };
         case ORDER_BY_NAME:
-            const orderName = action.payload === "A-Z" ? state.allDogs.sort((a, b) => {
+            const orderName = action.payload === "A-Z" ? state.dogs.sort((a, b) => {
                 if(a.name > b.name) return 1;
                 if(b.name > a.name) return -1;
                 return 0;
-            }) : state.allDogs.sort((a, b) => {
+            }) : state.dogs.sort((a, b) => {
                 if(a.name > b.name) return -1;
                 if(b.name > a.name) return 1;
                 return 0;
             });
             return{
                 ...state,
-                dogs: orderName
+                allDogs: orderName
             };
         case FILTER_BY_TEMPERAMENT:
-            const allTemperaments = state.allDogs
-            const getByTemp = action.payload === 'All' ? allTemperaments : allTemperaments.filter(e => e.dogs === action.payload)
+            const allTemperaments = state.dogs
+            const getByTemp = action.payload === 'All' ? allTemperaments : allTemperaments.filter(e => e.allDogs === action.payload)
             return{
                 ...state,
-                dogs: getByTemp
+                allDogs: getByTemp
             };
         case ADD_FAVORITE:
             return{

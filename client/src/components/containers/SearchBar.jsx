@@ -1,26 +1,27 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { getNameOfDog } from '../../redux/actions';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getNameOfDog } from "../../redux/actions";
 
 export default function SearchBar() {
     const dispatch = useDispatch();
-    const [dog, setDog] = useState("");
+    const [searchDog, setSearchDog] = useState("");
 
-    function handleInputChange(e){
+    const handleInput = (e) => {
         e.preventDefault()
-        setDog(e.target.value)
+        setSearchDog(e.target.value)
     }
-    function handleSubmit(e){
+
+    const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(getNameOfDog(dog))
+        dispatch(getNameOfDog(searchDog));
     }
-  return (
-    <div>
-            <input type="text"
-            placeholder='Search for puppys...'
-            onChange={(e) => handleInputChange(e)}
-            />
-            <button type='submit' onClick={(e) => handleSubmit(e)}>Search</button>
-    </div>
-  )
+
+    return(
+        <div>
+            <input type="text" onChange={handleInput} placeholder="Search..."/>
+            <button type="submit" onClick={handleSubmit}>
+                Search
+            </button>
+        </div>
+    )
 }
