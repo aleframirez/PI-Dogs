@@ -12,7 +12,7 @@ router.get('/breeds', allInfo);
 
 router.get('/breeds/search', allInfo);
 
-router.get('/breeds/:id', getFromId);
+router.get('/breeds/detail/:id', getFromId);
 
 router.post('/breeds/create', postNewDog);
 

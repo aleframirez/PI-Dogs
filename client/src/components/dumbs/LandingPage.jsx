@@ -14,7 +14,7 @@ export default function LandingPage(){
                 <p>Algo de info mas por las dudas para no quedar cortina</p>
             </div>
                 <Link to="/breeds">
-                    <button className={styles.Landing_Home}>Home</button>
+                    <button className={styles.button}>Home</button>
                 </Link>
         </div>
     )

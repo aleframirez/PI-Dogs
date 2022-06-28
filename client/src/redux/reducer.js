@@ -8,14 +8,16 @@ import {
     ORDER_BY_NAME,
     FILTER_BY_TEMPERAMENT,
     GET_DETAILS,
+    GET_CREATED_DOGS,
+    ADD_DOG
 } from "./actions"
 
 let initialState = {
     dogs: [],
     temperaments: [],
     allDogs: [],
-    favorites: [],
     details: [],
+    favorites: [],
 }
 
 export default function rootReducer(state = initialState, action){
@@ -23,7 +25,8 @@ export default function rootReducer(state = initialState, action){
         case GET_DOGS:
             return{
                 ...state,
-                dogs: action.payload
+                dogs: action.payload,
+                allDogs: action.payload
             };
         case GET_NAME_DOGS:
             return{
@@ -37,46 +40,80 @@ export default function rootReducer(state = initialState, action){
                 temperaments: filteredTemp
             };
         case GET_DETAILS:
-            const moreDetails = action.payload
-            if(!moreDetails[0].temperaments[0]) moreDetails[0].temperaments[0] = "There are no temperaments"
+            let myDetails = action.payload
+            console.log('asdasdasdasd', myDetails)
+            if(!myDetails[0].temperament[0]) {
+                myDetails[0].temperament[0] = "no-temperaments"
+            }
             return{
                 ...state,
-                details: moreDetails
+                details: myDetails
             };
         case ORDER_BY_WEIGHT:
-            const orderWeight = action.payload === "min_weight" ? state.dogs.sort((a, b) => {
-                if(parseInt(a.weight[1]) > parseInt(b.weight[1])) return 1;
-                if(parseInt(b.weight[1]) > parseInt(a.weight[1])) return -1;
-                return 0;
-            }) : state.dogs.sort((a, b) => {
+            const orderWeight = action.payload === "min_weight" ? state.allDogs.sort((a, b) => {
                 if(parseInt(a.weight[1]) > parseInt(b.weight[1])) return -1;
                 if(parseInt(b.weight[1]) > parseInt(a.weight[1])) return 1;
                 return 0;
+            }) : state.allDogs.sort((a, b) => {
+                if(parseInt(a.weight[1]) > parseInt(b.weight[1])) return 1;
+                if(parseInt(b.weight[1]) > parseInt(a.weight[1])) return -1;
+                return 0;
             });
+            console.log('Este es un finisimo detalle del Reducer OrderByWeight:', orderWeight)
             return{
                 ...state,
-                allDogs: orderWeight
+                dogs: orderWeight
             };
         case ORDER_BY_NAME:
-            const orderName = action.payload === "A-Z" ? state.dogs.sort((a, b) => {
-                if(a.name > b.name) return 1;
-                if(b.name > a.name) return -1;
-                return 0;
-            }) : state.dogs.sort((a, b) => {
-                if(a.name > b.name) return -1;
-                if(b.name > a.name) return 1;
-                return 0;
-            });
+            var porqueriaQueNoAnda
+            switch(action.payload){
+                case 'A-Z':
+                    porqueriaQueNoAnda = function(a, b){
+                        if(a.name < b.name){return -1}
+                        if(a.name > b.name){return 1}
+                        return 0;
+                    }; break;
+                case 'Z-A':
+                    porqueriaQueNoAnda = function(a, b){
+                        if(a.name < b.name){return 1}
+                        if(a.name > b.name){return -1}
+                        return 0;
+                    }; break;
+                case 'min_weight':
+                    porqueriaQueNoAnda = function(a, b){
+                        if(a.weight > b.weight){return 1}
+                        if(a.weight < b.weight){return -1}
+                        return 0
+                    }; break;
+                case 'max_weight':
+                    porqueriaQueNoAnda = function(a, b){
+                        if(a.weight < b.weight){return -1}
+                        if(a.weight > b.weight){return 1}
+                        return 0
+                    }; break;
+                default: break;
+            }
             return{
                 ...state,
-                allDogs: orderName
+                dogs: state.dogs.sort(porqueriaQueNoAnda)
             };
         case FILTER_BY_TEMPERAMENT:
-            const allTemperaments = state.dogs
-            const getByTemp = action.payload === 'All' ? allTemperaments : allTemperaments.filter(e => e.allDogs === action.payload)
+            const allPuppys = state.allDogs;
+            // console.log('Finisimo detalle del Reducer FilterDog:', allPuppys)
+            let filteredDog = [];
+            if(action.payload === "All"){
+                filteredDog = allPuppys;
+            }else{
+                for (let i = 0; i < allPuppys.length; i++) {
+                    let found = allPuppys[i].temperament.find((t) => t === action.payload);
+                    if(found){
+                        filteredDog.push(allPuppys[i]);
+                    }
+                }
+            }
             return{
                 ...state,
-                allDogs: getByTemp
+                dogs: filteredDog
             };
         case ADD_FAVORITE:
             return{
@@ -89,6 +126,17 @@ export default function rootReducer(state = initialState, action){
                 favorites: state.favorites.filter((e) => {
                     return e.id !== action.payload;
                 })
+            };
+        case GET_CREATED_DOGS:
+            // const allDogs = state.allDogs;
+            const createdDogs = action.payload === 'My_Dogs' ? state.allDogs.filter(e => e.createdInDb) : state.allDogs.filter(e => !e.createdInDb)
+            return{
+                ...state,
+                dogs: action.payload === "All" ? state.allDogs : createdDogs
+            };
+        case ADD_DOG:
+            return{
+                ...state
             };
         default:
             return {...state};

@@ -11,7 +11,7 @@ export default function SearchBar() {
         setSearchDog(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = e => {
         e.preventDefault()
         dispatch(getNameOfDog(searchDog));
     }

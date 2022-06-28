@@ -1,8 +1,9 @@
 import React, {useEffect} from "react";
 import PackOfDogs from "../dumbs/PackOfDogs";
 import { connect } from "react-redux";
-import { getDogs } from "../../redux/actions";
+import { getDogs, filterByTemperament } from "../../redux/actions";
 import NavBar from "./NavBar";
+import CreatedDog from "./CreatedDog";
 
 function mapStateToProps(state){
     return{
@@ -12,26 +13,13 @@ function mapStateToProps(state){
 
 function Home(props){
     // console.log(props)
-    useEffect(() => {
+    useEffect((e) => {
         props.getDogs();
     },[])
     
     return(
         <div className="container">
             <NavBar />
-            <div>
-                <select>
-                    <option value = "temperaments">Temperaments</option>
-                    <option value = "breeds">Breed</option>
-                </select>
-            </div>
-            <div>
-                <select>
-                    <option value = "All">All</option>
-                    <option value = "Created">Createds</option>
-                    <option value = "Api">Existents</option>
-                </select>
-            </div>
             <div>
                 <PackOfDogs dogs={props.dogs}/>
             </div>

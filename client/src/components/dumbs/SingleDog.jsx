@@ -1,11 +1,14 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import styles from "./modules/SingleDog.module.css"
 
 export default function SingleDog(props){
-    console.log(props)
+    // console.log('Estos son los props de SingleDog', props)
     return(
         <article className={styles.single_card}>
-            <img className={styles.card_img} src={props.image} alt="Img" />
+            <Link to={`/breeds/detail/${props.id}`}>
+                <img className={styles.card_img} src={props.image} alt="Img" />
+            </Link>
             <div className={styles.card_content}>
                 <h4 className={styles.card_title}>{props.name}</h4>
                 <span className={styles.card_subtitle}>
