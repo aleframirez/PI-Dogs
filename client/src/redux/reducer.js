@@ -1,7 +1,7 @@
 import { 
     GET_TEMPERAMENTS,
     REMOVE_FAVORITE,
-    ORDER_BY_WEIGHT,
+    // ORDER_BY_WEIGHT,
     GET_DOGS, 
     GET_NAME_DOGS,
     ADD_FAVORITE,
@@ -41,7 +41,7 @@ export default function rootReducer(state = initialState, action){
             };
         case GET_DETAILS:
             let myDetails = action.payload
-            console.log('asdasdasdasd', myDetails)
+            // console.log('asdasdasdasd', myDetails)
             if(!myDetails[0].temperament[0]) {
                 myDetails[0].temperament[0] = "no-temperaments"
             }
@@ -49,21 +49,23 @@ export default function rootReducer(state = initialState, action){
                 ...state,
                 details: myDetails
             };
-        case ORDER_BY_WEIGHT:
-            const orderWeight = action.payload === "min_weight" ? state.allDogs.sort((a, b) => {
-                if(parseInt(a.weight[1]) > parseInt(b.weight[1])) return -1;
-                if(parseInt(b.weight[1]) > parseInt(a.weight[1])) return 1;
-                return 0;
-            }) : state.allDogs.sort((a, b) => {
-                if(parseInt(a.weight[1]) > parseInt(b.weight[1])) return 1;
-                if(parseInt(b.weight[1]) > parseInt(a.weight[1])) return -1;
-                return 0;
-            });
-            console.log('Este es un finisimo detalle del Reducer OrderByWeight:', orderWeight)
-            return{
-                ...state,
-                dogs: orderWeight
-            };
+        // case ORDER_BY_WEIGHT:
+        //     const orderWeight = action.payload === "min_weight" ? state.allDogs.sort((a, b) => {
+        //         console.log('Que lo que ta pasando aqui Pablo Lorenzo?', a.weight[0])
+        //         if(isNaN(a.weight[1])) console.log("hhhhhhhhhhh", a)
+        //         if(parseInt(a.weight[0]) > parseInt(b.weight[0])) return -1;
+        //         if(parseInt(b.weight[0]) > parseInt(a.weight[0])) return 1;
+        //         return 0;
+        //     }) : state.allDogs.sort((a, b) => {
+        //         if(parseInt(a.weight[0]) > parseInt(b.weight[0])) return 1;
+        //         if(parseInt(b.weight[0]) > parseInt(a.weight[0])) return -1;
+        //         return 0;
+        //     });
+        //     console.log('Este es un finisimo detalle del Reducer OrderByWeight:', orderWeight)
+        //     return{
+        //         ...state,
+        //         dogs: orderWeight
+        //     };
         case ORDER_BY_NAME:
             var porqueriaQueNoAnda
             switch(action.payload){
@@ -81,18 +83,23 @@ export default function rootReducer(state = initialState, action){
                     }; break;
                 case 'min_weight':
                     porqueriaQueNoAnda = function(a, b){
-                        if(a.weight > b.weight){return 1}
-                        if(a.weight < b.weight){return -1}
+                        if(isNaN(a.weight[0])) a.weight[0] = a.weight[1]
+                        if(isNaN(b.weight[0])) b.weight[0] = b.weight[1]
+                        if(a.weight[0] > b.weight[0]){return 1}
+                        if(a.weight[0] < b.weight[0]){return -1}
                         return 0
                     }; break;
                 case 'max_weight':
                     porqueriaQueNoAnda = function(a, b){
-                        if(a.weight < b.weight){return -1}
-                        if(a.weight > b.weight){return 1}
+                        if(isNaN(a.weight[0])) a.weight[0] = a.weight[1]
+                        if(isNaN(b.weight[0])) b.weight[0] = b.weight[1]
+                        if(a.weight[0] > b.weight[0]){return -1}
+                        if(a.weight[0] < b.weight[0]){return 1}
                         return 0
                     }; break;
                 default: break;
             }
+            console.log(state.dogs.sort(porqueriaQueNoAnda))
             return{
                 ...state,
                 dogs: state.dogs.sort(porqueriaQueNoAnda)
@@ -129,7 +136,7 @@ export default function rootReducer(state = initialState, action){
             };
         case GET_CREATED_DOGS:
             // const allDogs = state.allDogs;
-            const createdDogs = action.payload === 'My_Dogs' ? state.allDogs.filter(e => e.createdInDb) : state.allDogs.filter(e => !e.createdInDb)
+            const createdDogs = action.payload === 'My_Dogs' ? state.allDogs.filter(e => e.createdInDb === true) : state.allDogs.filter(e => !e.createdInDb === false)
             return{
                 ...state,
                 dogs: action.payload === "All" ? state.allDogs : createdDogs

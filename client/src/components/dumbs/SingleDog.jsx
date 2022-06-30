@@ -12,9 +12,9 @@ export default function SingleDog(props){
             <div className={styles.card_content}>
                 <h4 className={styles.card_title}>{props.name}</h4>
                 <span className={styles.card_subtitle}>
-                    Weight: {props.weight.length?props.weight.join(', ') : 
+                    Weight: {props.weight.length?props.weight.join('Kg - ') : 
                     props.weight.map(w => 
-                        <span key={w+Math.random}>{w+' '}</span>
+                        <span key={w+Math.random}>{w+' Kg'}</span>
                     )}Kg
                 </span>
                 <span className={styles.card_description}>

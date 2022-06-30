@@ -1,0 +1,15 @@
+.filter_max {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    padding-bottom: 1rem;
+}
+
+select{
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    background-color: transparent;
+    background-image: none;
+}

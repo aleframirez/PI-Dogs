@@ -1,30 +1,35 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import PackOfDogs from "../dumbs/PackOfDogs";
-import { connect } from "react-redux";
-import { getDogs, filterByTemperament } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getDogs } from "../../redux/actions";
 import NavBar from "./NavBar";
-import CreatedDog from "./CreatedDog";
+import styles from "../dumbs/modules/PackOfDogs.module.css";
+import s from "./modules/Home.module.css"
+// import CreatedDog from "./CreatedDog";
 
-function mapStateToProps(state){
-    return{
-        dogs: state.dogs
-    }
+export default function Home() {
+  const dispatch = useDispatch();
+  const { dogs } = useSelector((state) => state);
+  // console.log(props)
+  useEffect(() => {
+    dispatch(getDogs());
+  }, [dispatch]);
+
+  return false ? (
+    <div className={s.wrapper}>
+      <div className={s.circle}></div>
+      <div className={s.circle}></div>
+      <div className={s.circle}></div>
+      <div className={s.shadow}></div>
+      <div className={s.shadow}></div>
+      <div className={s.shadow}></div>
+    </div>
+  ) : (
+    <div className={styles.filter_blur}>
+      <NavBar />
+      <div>
+        <PackOfDogs dogs={dogs} />
+      </div>
+    </div>
+  );
 }
-
-function Home(props){
-    // console.log(props)
-    useEffect((e) => {
-        props.getDogs();
-    },[])
-    
-    return(
-        <div className="container">
-            <NavBar />
-            <div>
-                <PackOfDogs dogs={props.dogs}/>
-            </div>
-        </div>
-    )
-}
-
-export default connect(mapStateToProps, { getDogs })(Home);

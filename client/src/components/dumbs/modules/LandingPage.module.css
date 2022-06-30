@@ -1,9 +1,11 @@
-.Main_Conteiner{
+body{
     background-image: url("https://tdma.info/wp-content/uploads/2017/08/dog-wallpaper-39.jpg");
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position:inherit;
+    /* filter:blur(3px) */
 }
 
 .button {
@@ -20,7 +22,7 @@
  border: 1px solid;
  font-family: inherit;
  text-transform: uppercase;
- color: var(--color);
+ color: black;
  z-index: 1;
 }
 
@@ -65,12 +67,21 @@
 }
 
 .Container{
-    width:50vw;
-    padding-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #a35b3258;
+    width:30vw;
+    height: 40vw;
+    padding: 2rem 2rem;
     position:relative;
+    align-items: center;
+    margin: 15px;
+    border-radius: 5px;
 }
 
 .Container h1{
+    font-family: 'Rubik Moonrocks', cursive;
     color: white;
     text-shadow: black;
     font-size: 4rem;
@@ -81,7 +92,8 @@
     color: white;
     text-shadow: black;
     font-size: 1.5rem;
-    margin-bottom: 4%
+    margin-bottom: 4%;
+    text-align: center;
 }
 
 .Container .Text{

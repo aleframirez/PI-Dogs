@@ -1,5 +1,14 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
 .packOfDog {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-  }
+}
+
+.filter_blur{
+  backdrop-filter: blur(10px);
+}

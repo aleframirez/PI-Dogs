@@ -18,6 +18,7 @@ export default function PackOfDogs({dogs}){
                 <Paginado pagina={pagina} setPagina={setPagina} maximo={maximo}/>
             </div>
             <div className={styles.packOfDog}>
+                {console.log(dogs)}
                 {dogs.length > 0 ? (
                     dogs.slice((pagina - 1) * porPagina, (pagina - 1) * porPagina + porPagina)
                     .map((e) => (
@@ -28,8 +29,9 @@ export default function PackOfDogs({dogs}){
                                 name = {e.name}
                                 temperament = {e.temperament}
                                 weight = {e.weight}
-                                height = {e.heigh}
+                                height = {e.height}
                                 life_span = {e.life_span}
+                                createdInDb = {e.createdInDb}
                                 />
                         </div>
                     ))

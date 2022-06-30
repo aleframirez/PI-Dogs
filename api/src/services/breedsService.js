@@ -50,7 +50,8 @@ const getInfoFromDb = async(req, res, next) => {
             weight: e.weight,
             temperament: e.temperaments.map(e => e.name),
             life_span: e.life_span,
-            image: e.image
+            image: e.image,
+            createdInDb: e.createdInDb
         }
     })
 };
@@ -104,7 +105,7 @@ const postNewDog = async(req, res, next) => {
         height: orderedHeight,
         weight: orderedWeight,
         life_span,
-        image: image ? image : "https://www.liveabout.com/thmb/qw3Q_JaguUrrF0r3ojuDdbDuN1U=/735x1200/filters:fill(auto,1)/lost-dog-58b8c9475f9b58af5c8c7aec.jpg"
+        image: image ? image : "https://img.freepik.com/free-vector/cute-dog-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3671.jpg?w=360"
     });
 
     let tempForDog = await Temperament.findAll({
