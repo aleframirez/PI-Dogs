@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom"
 import { getDetails } from '../../redux/actions'
 import styles from "./modules/Details.module.css"
-import NavBar from "./NavBar";
 
 export default function Details() {
   const dispatch = useDispatch()
@@ -32,35 +32,38 @@ export default function Details() {
 
   return (
     <article className={styles.filter_blur}>
-      <NavBar />
+      {/* <NavBar /> */}
+      <Link to="/breeds">
+        <button>Go Home</button>
+      </Link>
       <div className={styles.detail_card}>
         <div className={styles.detail_content}>
           <div>
             <img className={styles.detail_img} src={dogImg} alt="img" />
           </div>
           <div className={styles.detail_info}>
-              <div className={styles.detail_breed}>
+              <div>
                 <h1>{dogName}</h1>
               </div>
               <div>
-                <div>
+                <div className={styles.detail_breed}>
                   <h3>{`Height: ${dogHeight && dogHeight[0]}Cm - ${dogHeight && dogHeight[1]}`} Cm</h3>
                   <h3>{`Weight: ${dogWeight && dogWeight[0]}Kg - ${dogWeight && dogWeight[1]}`} Kg</h3>
-                  <h3>{`Life span: ${dogLife_span}`}</h3>
+                  <h3>{`Life span: ${dogLife_span} years`}</h3>
                 </div>
                 <div>
                   <div>
                     <div>
-                      <h3>Temperaments:</h3>
+                      <h2>Temperaments:</h2>
                     </div>
-                    <ul className={styles.temp_details}>
+                    <div className={styles.temp_details}>
                       {dogTemp.map(dt => <h5 key={dt}>{dt}</h5>)}
-                    </ul>
+                    </div>
                   </div>
                 </div>
               </div>
               <div>
-                <button>Hola</button>
+                <button className={styles.det_but}> <span>Add to Fav</span></button>
               </div>
           </div>
         </div>

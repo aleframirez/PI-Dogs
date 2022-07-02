@@ -15,7 +15,7 @@ export default function Home() {
     dispatch(getDogs());
   }, [dispatch]);
 
-  return false ? (
+  return !dogs.length ? (
     <div className={s.wrapper}>
       <div className={s.circle}></div>
       <div className={s.circle}></div>

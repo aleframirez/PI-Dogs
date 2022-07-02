@@ -105,22 +105,21 @@ export default function rootReducer(state = initialState, action){
                 dogs: state.dogs.sort(porqueriaQueNoAnda)
             };
         case FILTER_BY_TEMPERAMENT:
-            const allPuppys = state.allDogs;
-            // console.log('Finisimo detalle del Reducer FilterDog:', allPuppys)
-            let filteredDog = [];
+            const allPuppys = state.allDogs; // constante con el estado global de todos los perros.
+            let filteredDog = []; // array donde se guardaran los temperamentos.
             if(action.payload === "All"){
-                filteredDog = allPuppys;
+                filteredDog = allPuppys; // Si es all tre muestra todos.
             }else{
-                for (let i = 0; i < allPuppys.length; i++) {
-                    let found = allPuppys[i].temperament.find((t) => t === action.payload);
+                for (let i = 0; i < allPuppys.length; i++) { // Recorre todo los perros.
+                    let found = allPuppys[i].temperament.find((t) => t === action.payload);// Si encuentra uno con el temp buscado
                     if(found){
-                        filteredDog.push(allPuppys[i]);
+                        filteredDog.push(allPuppys[i]); // Pushea al array creado.
                     }
                 }
             }
             return{
                 ...state,
-                dogs: filteredDog
+                dogs: filteredDog // Muestra el array creado con un temp unico o todos los perros.
             };
         case ADD_FAVORITE:
             return{
