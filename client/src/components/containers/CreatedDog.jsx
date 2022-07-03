@@ -9,8 +9,10 @@ const validate = (form) => {
   let error = {}
   if(!form.name) error.name = "Required fields: Name"
   if(!form.min_height || !form.max_height) error.height = "Required fields: Height min - max"
+  if(form.min_height >= form.max_height) error.height = "Seems to be something wrong with the height"
   if(!form.min_weight || !form.max_weight) error.weight = "Required fields: Weight min - max"
-  if(!form.life_span) error.life_span = "Required fields: Lifespan"
+  if(form.min_weight >= form.max_weight) error.weight = "Seems to be something wrong with the weight"
+  console.log("Finisimo detalle de los errores", Object.values(error).length)
   return error
 }
 
@@ -18,7 +20,7 @@ export default function CreatedDog() {
   const dispatch = useDispatch();
   const temperaments = useSelector((state) => state.temperaments);
 
-  const [button, setButton] = useState(true);
+  // const [button, setButton] = useState(true);
   const [error, setErrors] = useState({
     name: "",
     min_height: "",
@@ -46,19 +48,22 @@ export default function CreatedDog() {
     dispatch(getTemperaments());
   },[dispatch]);
 
-  useEffect(() => {
-    if(
-      form.name.length > 0 &&
-      form.min_height.length > 0 &&
-      form.max_height.length > 0 &&
-      form.min_weight.length >0 &&
-      form.max_weight.length >0
-      ){
-        setButton(false)
-      }else{
-        setButton(true)
-      }
-  },[form, setButton])
+  // useEffect(() => {
+  //   if(
+  //     form.name.length > 0 &&
+  //     form.min_height.length > 0 &&
+  //     form.max_height.length > 0 &&
+  //     form.min_weight.length >0 &&
+  //     form.max_weight.length >0 &&
+  //     form.min_height > form.max_height &&
+  //     form.min_weight > form.max_weight
+  //     ){
+  //       setButton(false)
+  //     }
+  //     else{
+  //       setButton(true)
+  //     }
+  // },[form, setButton])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -79,6 +84,7 @@ export default function CreatedDog() {
       image: "",
       temperaments: [],
     })
+    history.push('/breeds')
   }
   console.log('asdasdasdasdada',form.temperaments)
 
@@ -107,7 +113,6 @@ export default function CreatedDog() {
     })
   }
 
-
   return (
     <div>
         <Link to="/breeds">
@@ -119,7 +124,6 @@ export default function CreatedDog() {
               <span>{error.name && <h3>{error.name}</h3>}</span>
               <span>{error.height && <h3>{error.height}</h3>}</span>
               <span>{error.weight && <h3>{error.weight}</h3>}</span>
-              <span>{error.life_span && <h3>{error.life_span}</h3>}</span>
             </div>
         <div className={styles.created_background}>
           <div className={styles.created_all}>
@@ -132,23 +136,23 @@ export default function CreatedDog() {
               </div>
               <div className={styles.created_TexInp}>
                   <p>Min Height: </p>
-                  <input type="text" value={form.min_height} name='min_height' onChange={handleChange} placeholder='...' />
+                  <input type="number" value={form.min_height} name='min_height' onChange={handleChange} min='1' max='100' placeholder='...' />
                   <p> - Max height: </p>
-                  <input type="text" value={form.max_height} name='max_height' onChange={handleChange} placeholder='...' />
+                  <input type="number" value={form.max_height} name='max_height' onChange={handleChange} min='1' max='100' placeholder='...' />
               </div>
               <div className={styles.created_TexInp}>
                   <p>Min weight: </p>
-                  <input type="text" value={form.min_weight} name='min_weight' onChange={handleChange} placeholder='...' />
+                  <input type="number" value={form.min_weight} name='min_weight' onChange={handleChange} min='1' max='100' placeholder='...' />
                   <p> - Max weight:</p>
-                  <input type="text" value={form.max_weight} name='max_weight' onChange={handleChange} placeholder='...' />
+                  <input type="number" value={form.max_weight} name='max_weight' onChange={handleChange} min='1' max='100' placeholder='...' />
               </div>
               <div className={styles.created_TexInp}>
                   <p>Lifespan...</p>
-                  <input type="text" value={form.life_span} name='life_span' onChange={handleChange} placeholder='Lifespan...' />
+                  <input type="text" value={form.life_span} name='life_span' onChange={handleChange} min='1' max='100' placeholder='...' />
               </div>
               <div>
                 <p>img</p>
-                <input type="text" value={form.image} name='image' onChange={handleChange} placeholder='image...' />
+                <input type="url" value={form.image} name='image' onChange={handleChange} placeholder='Url image...' />
                 <br/>
               </div>
               <div>
@@ -163,7 +167,7 @@ export default function CreatedDog() {
                 </select>
               </div>
               <div>
-                <button disabled={button} type="submit" form="form">Add puppy</button>
+                <button disabled={Object.values(error).length} type="submit" form="form">Add puppy</button>
               </div>
             </form>
               <div>

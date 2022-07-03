@@ -9,10 +9,10 @@ export default function LandingPage(){
             <div className={styles.Container}>
                 <div>
                     <h1>Welcome</h1>
-                    <h4>To Doge</h4>
+                    <h4>To Paradise</h4>
                 </div>
                 <div className={styles.Text}>
-                    <p>Algo de info mas por las dudas para no quedar cortina</p>
+                    <h3>Here you can find some of the dog breeds best known to all of us. You can even create your own race!</h3>
                 </div>
                     <Link to="/breeds">
                         <button className={styles.button}>Home</button>

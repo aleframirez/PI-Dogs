@@ -10,7 +10,7 @@ export default function SingleDog(props){
                 <img className={styles.card_img} src={props.image} alt="Img" />
             </Link>
             <div className={styles.card_content}>
-                <h4 className={styles.card_title}>{props.name}</h4>
+                <h4 className={styles.card_title}>{props.name.charAt(0).toUpperCase()+props.name.slice(1)}</h4>
                 <span className={styles.card_subtitle}>
                     Weight: {props.weight.length?props.weight.join('Kg - ') : 
                     props.weight.map(w => 

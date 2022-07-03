@@ -6,6 +6,7 @@ body{
     background-size: cover;
     background-position:inherit;
     /* filter:blur(3px) */
+    font-family: 'Mali', cursive;
 }
 
 .button {
@@ -104,9 +105,9 @@ body{
 }
 
 .Text{
-    color: white;
+    color: black;
     text-shadow: black;
     font-size: 1rem;
-    width: 23rem;
+    width: 27rem;
     text-align: center;
 }

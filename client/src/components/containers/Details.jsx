@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom"
 import { getDetails } from '../../redux/actions'
 import styles from "./modules/Details.module.css"
+import s from "../containers/modules/Home.module.css"
 
 export default function Details() {
   const dispatch = useDispatch()
@@ -19,7 +20,7 @@ export default function Details() {
   let dogName, dogImg, dogTemp = [], dogHeight, dogWeight, dogLife_span;
 
   if(details[0]){
-    dogName = details[0].name;
+    dogName = details[0].name.charAt(0).toUpperCase()+details[0].name.slice(1);
     dogImg = details[0].image;
     dogWeight = details[0].weight;
     dogHeight = details[0].heigh;
@@ -30,7 +31,16 @@ export default function Details() {
 
   }
 
-  return (
+  return !details.length ? (
+    <div className={s.wrapper}>
+    <div className={s.circle}></div>
+    <div className={s.circle}></div>
+    <div className={s.circle}></div>
+    <div className={s.shadow}></div>
+    <div className={s.shadow}></div>
+    <div className={s.shadow}></div>
+  </div>
+  ):(
     <article className={styles.filter_blur}>
       {/* <NavBar /> */}
       <Link to="/breeds">
@@ -49,7 +59,7 @@ export default function Details() {
                 <div className={styles.detail_breed}>
                   <h3>{`Height: ${dogHeight && dogHeight[0]}Cm - ${dogHeight && dogHeight[1]}`} Cm</h3>
                   <h3>{`Weight: ${dogWeight && dogWeight[0]}Kg - ${dogWeight && dogWeight[1]}`} Kg</h3>
-                  <h3>{`Life span: ${dogLife_span} years`}</h3>
+                  <h3>{`Life span: ${dogLife_span}`}</h3>
                 </div>
                 <div>
                   <div>

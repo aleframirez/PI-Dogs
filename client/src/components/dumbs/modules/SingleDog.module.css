@@ -23,6 +23,7 @@ body {
     color: #a18a96;
     background: initial;
     /* background-size: cover; */
+    border: 2px solid #ac7893;
     border-radius: 20px;
     overflow: hidden;
     margin: 10px;
