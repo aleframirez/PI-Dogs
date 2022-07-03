@@ -10,7 +10,7 @@ const validate = (form) => {
   if(!form.name) error.name = "Required fields: Name"
   if(!form.min_height || !form.max_height) error.height = "Required fields: Height min - max"
   if(!form.min_weight || !form.max_weight) error.weight = "Required fields: Weight min - max"
-  if(!form.life_span) error.life_span = "Required fields: Lifespan'"
+  if(!form.life_span) error.life_span = "Required fields: Lifespan"
   return error
 }
 
@@ -63,6 +63,10 @@ export default function CreatedDog() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(error.values) return alert("Please correct the creation fields")
+    form.temperaments = form.temperaments.filter((item, index) => {
+      return form.temperaments.indexOf(item) === index;
+    })
+    console.log('Del coso', form.temperaments)
     dispatch(addDog(form));
     alert("Your puppy was successufully added");
     setForm({
@@ -76,6 +80,7 @@ export default function CreatedDog() {
       temperaments: [],
     })
   }
+  console.log('asdasdasdasdada',form.temperaments)
 
   const handleChange = (e) => {
     setForm({
@@ -105,81 +110,74 @@ export default function CreatedDog() {
 
   return (
     <div>
-      <div className={styles.created_home}>
         <Link to="/breeds">
-          <button className={styles.button_home}>Go Home</button>
+          <button className={styles.button_home}>Go Home 🐶</button>
         </Link>
-      </div>
-      <div className={styles.created_background}>
-        <div className={styles.created_all}>
-          <form className={styles.created_form} action="" id='form' onSubmit={handleSubmit}>
-            <div>
+      <div className={styles.papa_grande}>
+            <div className={styles.created_errors}>
+              <div>{error && <h2>Do you have some erros?</h2>}</div>
+              <span>{error.name && <h3>{error.name}</h3>}</span>
+              <span>{error.height && <h3>{error.height}</h3>}</span>
+              <span>{error.weight && <h3>{error.weight}</h3>}</span>
+              <span>{error.life_span && <h3>{error.life_span}</h3>}</span>
+            </div>
+        <div className={styles.created_background}>
+          <div className={styles.created_all}>
+            <form className={styles.created_form} action="" id='form' onSubmit={handleSubmit}>
               <div>
-                <p>Name</p>
-                <input type="text" value={form.name} name='name' onChange={handleChange} placeholder='Name...' />
+                <div>
+                  <p>Name</p>
+                  <input type="text" value={form.name} name='name' onChange={handleChange} placeholder='Name...' />
+                </div>
               </div>
-              <div>{error.name && <p>{error.name}</p>}</div>
-            </div>
-            <div>
-              <div>
-                <p>Min Height</p>
-                <input type="text" value={form.min_height} name='min_height' onChange={handleChange} placeholder='Min height...' />
+              <div className={styles.created_TexInp}>
+                  <p>Min Height: </p>
+                  <input type="text" value={form.min_height} name='min_height' onChange={handleChange} placeholder='...' />
+                  <p> - Max height: </p>
+                  <input type="text" value={form.max_height} name='max_height' onChange={handleChange} placeholder='...' />
               </div>
-              <div>
-                <p>Max height</p>
-                <input type="text" value={form.max_height} name='max_height' onChange={handleChange} placeholder='Max height...' />
+              <div className={styles.created_TexInp}>
+                  <p>Min weight: </p>
+                  <input type="text" value={form.min_weight} name='min_weight' onChange={handleChange} placeholder='...' />
+                  <p> - Max weight:</p>
+                  <input type="text" value={form.max_weight} name='max_weight' onChange={handleChange} placeholder='...' />
               </div>
-              <div>{error.height && <p>{error.height}</p>}</div>
-            </div>
-            <div>
-              <div>
-                <p>Min weight</p>
-                <input type="text" value={form.min_weight} name='min_weight' onChange={handleChange} placeholder='Min weight...' />
-              </div>
-              <div>
-                <p>Max weight</p>
-                <input type="text" value={form.max_weight} name='max_weight' onChange={handleChange} placeholder='Max weight...' />
-              </div>
-              <div>{error.weight && <p>{error.weight}</p>}</div>
-            </div>
-            <div>
-              <div>
-                <p>Lifespan...</p>
-                <input type="text" value={form.life_span} name='life_span' onChange={handleChange} placeholder='Lifespan...' />
-              </div>
-              <div>{error.life_span && <p>{error.life_span}</p>}</div>
-            </div>
-            <div>
-              <p>img</p>
-              <input type="text" value={form.image} name='image' onChange={handleChange} placeholder='image...' />
-            </div>
-            <div>
-              <h3>Select the temperaments</h3>
-            </div>
-            <div>
-              <select onChange={handleSelect}>
-                <option disabled selected defaultValue>Temperaments</option>
-                {temperaments.map(z => (
-                  <option value={z.name} key={z.name+Math.random()}>{z.name}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <button disabled={button} type="submit" form="form">Add puppy</button>
-            </div>
-          </form>
-            <div>
-              <div>
-                <h2>Temperaments</h2>
+              <div className={styles.created_TexInp}>
+                  <p>Lifespan...</p>
+                  <input type="text" value={form.life_span} name='life_span' onChange={handleChange} placeholder='Lifespan...' />
               </div>
               <div>
-                {form.temperaments.map(el => 
-                  <div key={el} onClick={() => handleDelete(el)}>
-                    <p>{`${el}`}</p>
-                  </div>
-                )}
+                <p>img</p>
+                <input type="text" value={form.image} name='image' onChange={handleChange} placeholder='image...' />
+                <br/>
               </div>
-            </div>
+              <div>
+                <h3>Select the temperaments</h3>
+              </div>
+              <div>
+                <select onChange={handleSelect}>
+                  <option disabled selected defaultValue>Temperaments</option>
+                  {temperaments.map((z,m) => (
+                    <option value={z.name} key={m}>{z.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <button disabled={button} type="submit" form="form">Add puppy</button>
+              </div>
+            </form>
+              <div>
+                <div className={styles.created_temp}>
+                  {form.temperaments.map((el,ds) => 
+                    <div>
+                      <button key={ds} onClick={() => handleDelete(el)} className={styles.temp_button}>{`${el}`}</button>
+                    </div>
+                  )}
+                </div>
+              </div>
+          </div>
+        </div>
+        <div className={styles.created_home}>
         </div>
       </div>
     </div>

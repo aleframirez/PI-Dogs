@@ -38,6 +38,7 @@
     margin: 0rem 0rem 0rem 3rem;
     text-decoration: none;
     border-radius: 30px;
+    border: 2px solid black;
 }
 
 .detail_info h1{
@@ -62,6 +63,7 @@
     width: 17rem;
     height: 17rem;
     object-fit: cover;
+    border: 2px solid black;
     border-radius: 10px;
 }
 
@@ -132,4 +134,65 @@
     transform: rotate(-1turn);
   }
   
-  
+  .button_home {
+    cursor: pointer;
+    display: inline-block;
+    background-color: #a35b3258;
+    padding: 0.5rem 0.5rem;
+    border: 2px solid #4f4f4f;
+    border-radius: 4px;
+    transition: all 0.2s ease-in;
+    position: relative;
+    overflow: hidden;
+    font-size: 19px;
+    color: rgb(0, 0, 0);
+    z-index: 1;
+    margin: 1.5rem 0rem 0rem 0rem;
+   }
+   
+   .button_home:before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.25);
+    top: 100%;
+    width: 140%;
+    height: 180%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+   }
+   
+   .button_home:after {
+    content: "";
+    position: absolute;
+    left: 55%;
+    transform: translateX(-50%) scaleY(1) scaleX(1.45);
+    top: 180%;
+    width: 160%;
+    height: 190%;
+    background-color: #39bda7;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+    z-index: -1;
+   }
+   
+   .button_home:hover {
+    color: #ffffff;
+    border: 1px solid #39bda7;
+   }
+   
+   .button_home:hover:before {
+    top: -35%;
+    background-color: #39bda7;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+   }
+   
+   .button_home:hover:after {
+    top: -45%;
+    background-color: #39bda7;
+    transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+   }

@@ -34,7 +34,7 @@ export default function Details() {
     <article className={styles.filter_blur}>
       {/* <NavBar /> */}
       <Link to="/breeds">
-        <button>Go Home</button>
+        <button className={styles.button_home}>Go Home 🐶</button>
       </Link>
       <div className={styles.detail_card}>
         <div className={styles.detail_content}>
