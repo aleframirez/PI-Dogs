@@ -6,13 +6,17 @@ import styles from "./modules/Created.module.css"
 
 
 const validate = (form) => {
+  console.log(form)
   let error = {}
+  // let LifeSp = document.getElementById("form.life_span");
+  // console.log(document)
   if(!form.name) error.name = "Required fields: Name"
   if(!form.min_height || !form.max_height) error.height = "Required fields: Height min - max"
-  if(form.min_height >= form.max_height) error.height = "Seems to be something wrong with the height"
+  if(parseInt(form.min_height) >= parseInt(form.max_height)) error.height = "Seems to be something wrong with the height"
   if(!form.min_weight || !form.max_weight) error.weight = "Required fields: Weight min - max"
-  if(form.min_weight >= form.max_weight) error.weight = "Seems to be something wrong with the weight"
-  console.log("Finisimo detalle de los errores", Object.values(error).length)
+  if(parseInt(form.min_weight) >= parseInt(form.max_weight)) error.weight = "Seems to be something wrong with the weight"
+  if(isNaN(form.life_span) || form.life_span==="" || form.life_span < 1 || form.life_span > 99) error.life_span = "Seems to be something wrong with the Lifespan"
+  // console.log("Finisimo detalle de los errores", Object.values(error).length)
   return error
 }
 
@@ -86,7 +90,7 @@ export default function CreatedDog() {
     })
     history.push('/breeds')
   }
-  console.log('asdasdasdasdada',form.temperaments)
+  // console.log('asdasdasdasdada',form.temperaments)
 
   const handleChange = (e) => {
     setForm({
@@ -124,6 +128,7 @@ export default function CreatedDog() {
               <span>{error.name && <h3>{error.name}</h3>}</span>
               <span>{error.height && <h3>{error.height}</h3>}</span>
               <span>{error.weight && <h3>{error.weight}</h3>}</span>
+              <span>{error.life_span && <h3>{error.life_span}</h3>}</span>
             </div>
         <div className={styles.created_background}>
           <div className={styles.created_all}>
