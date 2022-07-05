@@ -18,13 +18,15 @@ const getInfoFromApi = async (req, res, next) => {
             if(e.height.metric) allHeight = e.height.metric.split(' - ');
             let allWeight = [];
             if(e.weight.metric) allWeight = e.weight.metric.split(' - ');
+            let allLifeSpan = [];
+            if(e.life_span) allLifeSpan = e.life_span.split(' - ')
             return {
                 id: e.id,
                 name: e.name,
                 heigh: allHeight,
                 weight: allWeight,
                 temperament: allTemperaments,
-                life_span: e.life_span,
+                life_span: allLifeSpan,
                 image: e.image.url
             }
         })
@@ -88,7 +90,7 @@ const getFromId = async(req, res, next) => {
 
 // Posteo de un nuevo perro
 const postNewDog = async(req, res, next) => {
-    let { name, min_height, max_height, min_weight, max_weight, life_span, temperaments, image } = req.body;
+    let { name, min_height, max_height, min_weight, max_weight, min_life_span, max_life_span, temperaments, image } = req.body;
 
     const orderedHeight = [];
     const minHeight = min_height;
@@ -100,11 +102,17 @@ const postNewDog = async(req, res, next) => {
     const maxWeight = max_weight;
     orderedWeight.push(minWeight, maxWeight);
 
+    const orderedLifespan = [];
+    const minLifespan = min_life_span;
+    const maxLifespan = max_life_span;
+    orderedLifespan.push(min_life_span, max_life_span)
+
+
     let newDog = await Breed.create({
         name,
         height: orderedHeight,
         weight: orderedWeight,
-        life_span,
+        life_span: orderedLifespan,
         image: image ? image : "https://img.freepik.com/free-vector/cute-dog-sitting-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3671.jpg?w=360"
     });
 

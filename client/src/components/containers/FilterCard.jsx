@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { FilterByTemperament, getDogs, getTemperaments, OrderByName, OrderByWeight, getCreatedDogs } from '../../redux/actions';
+import { FilterByTemperament, getDogs, getTemperaments, OrderByName, getCreatedDogs } from '../../redux/actions';
 import styles from "./modules/Filter.module.css"
 
 export default function FilterCard() {

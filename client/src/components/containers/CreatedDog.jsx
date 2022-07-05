@@ -8,15 +8,26 @@ import styles from "./modules/Created.module.css"
 const validate = (form) => {
   console.log(form)
   let error = {}
-  // let LifeSp = document.getElementById("form.life_span");
-  // console.log(document)
-  if(!form.name) error.name = "Required fields: Name"
+  if(!form.name){
+    error.name = "Required fields: Name"
+  }  else if (!/^([A-ZÁÉÍÓÚ]{1}[a-zñáéíóú]+[\s]*)+$/.test(form.name)) {
+    error.name = " The first letter must be uppercase and cannot contain numbers"};
+
   if(!form.min_height || !form.max_height) error.height = "Required fields: Height min - max"
-  if(parseInt(form.min_height) >= parseInt(form.max_height)) error.height = "Seems to be something wrong with the height"
+  // if(parseInt(form.min_height) >= parseInt(form.max_height)) error.height = "Seems to be something wrong with the height"
+  if(parseInt(form.min_height) < 0 || parseInt(form.min_height) > parseInt(form.max_height)) error.height = "Please, check the height minimun requirements"
+  if(parseInt(form.max_height) > 100 || parseInt(form.max_height) < parseInt(form.min_height)) error.height = "Please, check the height maximum requirements"
+
+
   if(!form.min_weight || !form.max_weight) error.weight = "Required fields: Weight min - max"
-  if(parseInt(form.min_weight) >= parseInt(form.max_weight)) error.weight = "Seems to be something wrong with the weight"
-  if(isNaN(form.life_span) || form.life_span==="" || form.life_span < 1 || form.life_span > 99) error.life_span = "Seems to be something wrong with the Lifespan"
-  // console.log("Finisimo detalle de los errores", Object.values(error).length)
+  // if(parseInt(form.min_weight) >= parseInt(form.max_weight)) error.weight = "Seems to be something wrong with the weight"
+  if(parseInt(form.min_weight) < 0 || parseInt(form.min_weight) > parseInt(form.max_weight)) error.height = "Please, check the weight minimun requirements"
+  if(parseInt(form.max_weight) > 100 || parseInt(form.max_weight) < parseInt(form.min_weight)) error.height = "Please, check the weight maximum requirements"
+
+  if(!form.min_life_span || !form.max_life_span) error.life_span = "Required fields: Lifespan min - max"
+  if(parseInt(form.min_life_span) >= parseInt(form.max_life_span)) error.life_span = "Seems to be something wrong with the Lifespan"
+  if(parseInt(form.min_life_span) < 0 || parseInt(form.min_life_span) > parseInt(form.max_life_span)) error.life_span = "Please, check the Lifespan minimun requirements"
+  if(parseInt(form.max_life_span) > 100 || parseInt(form.max_life_span) < parseInt(form.min_life_span)) error.life_span = "Please, check the Lifespan maximum requirements"
   return error
 }
 
@@ -31,7 +42,8 @@ export default function CreatedDog() {
     max_height: "",
     min_weight: "",
     max_weight: "",
-    life_span: "",
+    min_life_span: "",
+    max_life_span: "",
     image: "",
   });
 
@@ -43,7 +55,8 @@ export default function CreatedDog() {
     max_height: "",
     min_weight: "",
     max_weight: "",
-    life_span:  "",
+    min_life_span:  "",
+    max_life_span: "",
     image: "",
     temperaments: [],
   })
@@ -74,8 +87,9 @@ export default function CreatedDog() {
     if(error.values) return alert("Please correct the creation fields")
     form.temperaments = form.temperaments.filter((item, index) => {
       return form.temperaments.indexOf(item) === index;
-    })
-    console.log('Del coso', form.temperaments)
+    });
+    // console.log('Del coso', form.max_life_span);
+    form.max_life_span = form.max_life_span + ' Years'
     dispatch(addDog(form));
     alert("Your puppy was successufully added");
     setForm({
@@ -84,7 +98,8 @@ export default function CreatedDog() {
       max_height: "",
       min_weight: "",
       max_weight: "",
-      life_span:  "",
+      min_life_span:  "",
+      max_life_span:  "",
       image: "",
       temperaments: [],
     })
@@ -152,8 +167,10 @@ export default function CreatedDog() {
                   <input type="number" value={form.max_weight} name='max_weight' onChange={handleChange} min='1' max='100' placeholder='...' />
               </div>
               <div className={styles.created_TexInp}>
-                  <p>Lifespan...</p>
-                  <input type="text" value={form.life_span} name='life_span' onChange={handleChange} min='1' max='100' placeholder='...' />
+                  <p>Lifespan... Min:</p>
+                  <input type="number" value={form.min_life_span} name='min_life_span' onChange={handleChange} min='1' max='100' placeholder='...' />
+                  <p> - Lifespan... Max:</p>
+                  <input type="number" value={form.max_life_span} name='max_life_span' onChange={handleChange} min='1' max='100' placeholder='...' />
               </div>
               <div>
                 <p>img</p>

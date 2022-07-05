@@ -59,7 +59,7 @@ export default function Details() {
                 <div className={styles.detail_breed}>
                   <h3>{`Height: ${dogHeight && dogHeight[0]}Cm - ${dogHeight && dogHeight[1]}`} Cm</h3>
                   <h3>{`Weight: ${dogWeight && dogWeight[0]}Kg - ${dogWeight && dogWeight[1]}`} Kg</h3>
-                  <h3>{`Life span: ${dogLife_span}`}</h3>
+                  <h3>{`Life span: ${dogLife_span && dogLife_span[0]} - ${dogLife_span && dogLife_span[1]}`}</h3>
                 </div>
                 <div>
                   <div>

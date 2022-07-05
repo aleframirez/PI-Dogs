@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
         allowNull: false
     },
     life_span: {
-        type: DataTypes.STRING
+        type: DataTypes.ARRAY(DataTypes.STRING),
     },
     image: {
       type: DataTypes.TEXT,
