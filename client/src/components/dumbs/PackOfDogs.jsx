@@ -3,11 +3,13 @@ import SingleDog from "./SingleDog"
 import styles from "./modules/PackOfDogs.module.css"
 import { useState } from "react";
 import Paginado from "../containers/Paginado";
+import FilterCard from "../containers/FilterCard";
 
 export default function PackOfDogs({dogs}){
     // console.log('Este es el detalle de PackOfDogs:', dogs)
     const [pagina, setPagina] =  useState(1)
     const [porPagina, setPorPagina] = useState(8)
+    const [input, setInput] = useState(1)
 
     const maximo = dogs.length / porPagina
 
@@ -15,10 +17,11 @@ export default function PackOfDogs({dogs}){
     return(
         <div>
             <div className={styles.packOfDog}>
-                <Paginado pagina={pagina} setPagina={setPagina} maximo={maximo}/>
+                <FilterCard setPagina={setPagina} pagina={pagina} setInput={setInput} input={input}/>
+                <Paginado pagina={pagina} setPagina={setPagina} maximo={maximo}  setInput={setInput} input={input}/>
             </div>
             <div className={styles.packOfDog}>
-                {console.log(dogs)}
+                {/* {console.log(dogs)} */}
                 {dogs.length > 0 ? (
                     dogs.slice((pagina - 1) * porPagina, (pagina - 1) * porPagina + porPagina)
                     .map((e) => (

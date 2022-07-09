@@ -1,7 +1,7 @@
 import { 
     GET_TEMPERAMENTS,
     REMOVE_FAVORITE,
-    // ORDER_BY_WEIGHT,
+    ORDER_BY_WEIGHT,
     GET_DOGS, 
     GET_NAME_DOGS,
     ADD_FAVORITE,
@@ -49,32 +49,15 @@ export default function rootReducer(state = initialState, action){
                 ...state,
                 details: myDetails
             };
-        // case ORDER_BY_WEIGHT:
-        //     const orderWeight = action.payload === "min_weight" ? state.allDogs.sort((a, b) => {
-        //         console.log('Que lo que ta pasando aqui Pablo Lorenzo?', a.weight[0])
-        //         if(isNaN(a.weight[1])) console.log("hhhhhhhhhhh", a)
-        //         if(parseInt(a.weight[0]) > parseInt(b.weight[0])) return -1;
-        //         if(parseInt(b.weight[0]) > parseInt(a.weight[0])) return 1;
-        //         return 0;
-        //     }) : state.allDogs.sort((a, b) => {
-        //         if(parseInt(a.weight[0]) > parseInt(b.weight[0])) return 1;
-        //         if(parseInt(b.weight[0]) > parseInt(a.weight[0])) return -1;
-        //         return 0;
-        //     });
-        //     console.log('Este es un finisimo detalle del Reducer OrderByWeight:', orderWeight)
-        //     return{
-        //         ...state,
-        //         dogs: orderWeight
-        //     };
-        case ORDER_BY_NAME:
-            var porqueriaQueNoAnda
-            switch(action.payload){
-                case 'A-Z':
-                    porqueriaQueNoAnda = function(a, b){
-                        if(a.name < b.name){return -1}
-                        if(a.name > b.name){return 1}
-                        return 0;
-                    }; break;
+            case ORDER_BY_NAME:
+                var porqueriaQueNoAnda
+                switch(action.payload){
+                    case 'A-Z':
+                        porqueriaQueNoAnda = function(a, b){
+                            if(a.name < b.name){return -1}
+                            if(a.name > b.name){return 1}
+                            return 0;
+                        }; break;
                 case 'Z-A':
                     porqueriaQueNoAnda = function(a, b){
                         if(a.name < b.name){return 1}
@@ -97,17 +80,28 @@ export default function rootReducer(state = initialState, action){
                         if(a.weight[0] < b.weight[0]){return 1}
                         return 0
                     }; break;
-                default: break;
-            }
+            default: break;
+        }
             console.log(state.dogs.sort(porqueriaQueNoAnda))
             return{
                 ...state,
                 dogs: state.dogs.sort(porqueriaQueNoAnda)
             };
-        case FILTER_BY_TEMPERAMENT:
-            const allPuppys = state.allDogs; // constante con el estado global de todos los perros.
-            let filteredDog = []; // array donde se guardaran los temperamentos.
-            if(action.payload === "All"){
+            case ORDER_BY_WEIGHT:
+                const allDogues = state.allDogs
+                const entreTantoYTanto = []
+                for (let i = 0; i < allDogues.length; i++) {
+                    console.log(allDogues[i].weight)
+                    if(allDogues[i].weight[0] > 5 && allDogues[i].weight[1] < 11) entreTantoYTanto.push(allDogues[i])
+                }
+                return{
+                    ...state,
+                    dogs: entreTantoYTanto
+                };
+            case FILTER_BY_TEMPERAMENT:
+                const allPuppys = state.allDogs; // constante con el estado global de todos los perros.
+                let filteredDog = []; // array donde se guardaran los temperamentos.
+                if(action.payload === "All"){
                 filteredDog = allPuppys; // Si es all tre muestra todos.
             }else{
                 for (let i = 0; i < allPuppys.length; i++) { // Recorre todo los perros.

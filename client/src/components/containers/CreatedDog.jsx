@@ -119,10 +119,15 @@ export default function CreatedDog() {
   }
 
   const handleSelect = (e) => {
+    if(!form.temperaments.includes(e.target.value)){
     setForm({
       ...form,
       temperaments: [...form.temperaments, e.target.value]
-    })
+    })}else{
+      setForm({
+        ...form,
+      })
+    }
   }
 
   const handleDelete = (el) => {

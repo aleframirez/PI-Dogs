@@ -2,7 +2,7 @@ const { Router } = require('express');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 const router = Router();
-const { prueba, allInfo, getFromId, postNewDog, getAllTemperaments } = require('../services/breedsService');
+const { prueba, allInfo, getFromId, postNewDog, getAllTemperaments, deleteBreed } = require('../services/breedsService');
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -17,6 +17,5 @@ router.get('/breeds/detail/:id', getFromId);
 router.post('/breeds/create', postNewDog);
 
 router.get("/temperaments", getAllTemperaments);
-
 
 module.exports = router;

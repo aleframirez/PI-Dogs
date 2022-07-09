@@ -8,11 +8,12 @@ import s from "./modules/Home.module.css"
 // import CreatedDog from "./CreatedDog";
 
 export default function Home() {
-  const dispatch = useDispatch();
   const { dogs } = useSelector((state) => state);
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", dogs)
+  const dispatch = useDispatch();
   // console.log(props)
   useEffect(() => {
-    dispatch(getDogs());
+    if(!dogs.length) dispatch(getDogs());
   }, [dispatch]);
 
   return !dogs.length ? (

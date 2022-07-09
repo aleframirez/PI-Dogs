@@ -1,18 +1,21 @@
 import React from 'react'
 import { useState } from 'react'
+import FilterCard from './FilterCard'
 import styles from './modules/Paginado.module.css'
 
-export default function Paginado({pagina, setPagina, maximo}) {
-  const [input, setInput] = useState(1)
+export default function Paginado({pagina, setPagina, maximo, setInput, input}) {
+  // const [input, setInput] = useState(1)
 
   const nextPage = () => {
     setInput(input + 1);
     setPagina(pagina + 1);
   }
+
   const prevPage = () => {
     setInput(input - 1);
     setPagina(pagina - 1);
   }
+  
   const onKeyDown = (e) => {
     if(e.keyCode === 13){
       setPagina(parseInt(e.target.value))

@@ -10,6 +10,11 @@ const prueba = (req, res) => {
 
 // Lamado a la API
 const getInfoFromApi = async (req, res, next) => {
+    /*
+    function fetch(api)
+    .then(respuesta => respuesta.json())
+    .then(rjson => rjon.map)
+    */
         const dataFromApi = await axios.get(API_URL);
         const infoFromApi = await dataFromApi.data.map(e => {
             let allTemperaments = [];
